@@ -1,0 +1,4 @@
+Config,StrutThickness_mm,SAV_ratio,FinalMassLoss_pct
+thin_sav,0.0825,48.2123,10.377584
+mid_sav,0.165,24.1062,5.5656
+thick_sav,0.2475,16.0708,3.411422
