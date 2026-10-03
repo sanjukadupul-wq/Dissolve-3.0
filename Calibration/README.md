@@ -17,6 +17,7 @@ Scripts and target data for the joint (k_f, k_d, k_ORR) calibration on `disc_10x
 | `run_bo_disc_joint_doe.slurm` | SLURM array (8 tasks) for the superseded local DoE, 672 h |
 | `run_bo_disc_verify_dip.slurm` | SLURM array (4 tasks) for the dip-verification batch, 336 h |
 | `run_bo_disc_phase4_fine_verify.slurm` | Phase 4: single run of the final point (k_f 35.9058, k_d 27.1696, k_ORR 0.5075) on the fine mesh `disc_10x2_hmin0.25.mesh`, 336 h, no bias correction |
+| `run_gsa_full_v2.slurm` | Morris global sensitivity analysis (180 runs = 20 trajectories x 8 parameters, 168 h, coarse cylinder mesh), re-run with the corrected chloride molar-unit physics; design read from `morris_full_design.csv` (seed 7) |
 
 Workflow: global DoE (12) -> `score_global.py` -> Phase 2 EI batch (8) -> dip verification (4) -> Phase 3 local DoE (8) -> Phase 4 fine-mesh verification (1).
 Coarse evaluations: 12 + 8 + 4 + 8 = 32.
