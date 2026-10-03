@@ -15,8 +15,11 @@ Scripts and target data for the joint (k_f, k_d, k_ORR) calibration on `disc_10x
 | `run_bo_disc_joint_phase2.slurm` | SLURM array (8 tasks) for Phase 2 EI-guided batch, 336 h |
 | `run_bo_disc_joint_phase3_local.slurm` | SLURM array (8 tasks) for Phase 3 local refinement, 336 h |
 | `run_bo_disc_joint_doe.slurm` | SLURM array (8 tasks) for the superseded local DoE, 672 h |
+| `run_bo_disc_verify_dip.slurm` | SLURM array (4 tasks) for the dip-verification batch, 336 h |
+| `run_bo_disc_phase4_fine_verify.slurm` | Phase 4: single run of the final point (k_f 35.9058, k_d 27.1696, k_ORR 0.5075) on the fine mesh `disc_10x2_hmin0.25.mesh`, 336 h, no bias correction |
 
-Workflow: global DoE (12) -> `score_global.py` -> Phase 2 EI batch (8) -> dip verification (4) -> Phase 3 local DoE (8).
+Workflow: global DoE (12) -> `score_global.py` -> Phase 2 EI batch (8) -> dip verification (4) -> Phase 3 local DoE (8) -> Phase 4 fine-mesh verification (1).
+Coarse evaluations: 12 + 8 + 4 + 8 = 32.
 The SLURM scripts expect `dissolve.edp` and the mesh in `/fs04/uj24/zinc_simulation` and the design CSVs in `bo_disc_coarse_joint/`.
 Not included: `score_combined.py` (fits the GP on the combined dataset) and the Phase 3 scoring script.
 
