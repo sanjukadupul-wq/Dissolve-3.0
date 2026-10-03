@@ -1,4 +1,10 @@
-# Calibration (Bayesian optimization) files
+# Scripts
+
+- `BO/` Bayesian-optimization calibration (DoE generation, scoring, SLURM jobs, target data)
+- `GSA/` Morris global sensitivity analysis
+- `Uncertainty/` post-hoc uncertainty of the calibrated parameters
+
+## BO
 
 Scripts and target data for the joint (k_f, k_d, k_ORR) calibration on `disc_10x2_coarse_hmin0.5.mesh`
 (simulation duration 336 h, matching the literature target).
@@ -17,11 +23,22 @@ Scripts and target data for the joint (k_f, k_d, k_ORR) calibration on `disc_10x
 | `run_bo_disc_joint_doe.slurm` | SLURM array (8 tasks) for the superseded local DoE, 672 h |
 | `run_bo_disc_verify_dip.slurm` | SLURM array (4 tasks) for the dip-verification batch, 336 h |
 | `run_bo_disc_phase4_fine_verify.slurm` | Phase 4: single run of the final point (k_f 35.9058, k_d 27.1696, k_ORR 0.5075) on the fine mesh `disc_10x2_hmin0.25.mesh`, 336 h, no bias correction |
-| `run_gsa_full_v2.slurm` | Morris global sensitivity analysis (180 runs = 20 trajectories x 8 parameters, 168 h, coarse cylinder mesh), re-run with the corrected chloride molar-unit physics; design read from `morris_full_design.csv` (seed 7) |
 
 Workflow: global DoE (12) -> `score_global.py` -> Phase 2 EI batch (8) -> dip verification (4) -> Phase 3 local DoE (8) -> Phase 4 fine-mesh verification (1).
 Coarse evaluations: 12 + 8 + 4 + 8 = 32.
 The SLURM scripts expect `dissolve.edp` and the mesh in `/fs04/uj24/zinc_simulation` and the design CSVs in `bo_disc_coarse_joint/`.
 Not included: `score_combined.py` (fits the GP on the combined dataset) and the Phase 3 scoring script.
+
+## Uncertainty
+
+| File | Role |
+|---|---|
+| `compute_95ci.py` | Post-hoc 95% intervals from `final_all_evaluations.txt` (32 BO trials; no new simulations): GP-predicted RMSE interval at the best point (mu +/- 1.96 sigma) and a bootstrap interval on k_f, k_d, k_ORR (400 resamples, GP refit, posterior minimum over 20,000 candidates); writes `bo_bootstrap_minima.csv` |
+
+## GSA
+
+`GSA/run_gsa_full_v2.slurm`: Morris GSA (180 runs = 20 trajectories x 8 parameters, 168 h, coarse cylinder mesh) with the corrected chloride molar-unit physics; design from `morris_full_design.csv` (seed 7).
+
+## Requirements
 
 The scripts require numpy, scipy (`scipy.stats.qmc`), pandas and scikit-learn and write their outputs next to the script.
