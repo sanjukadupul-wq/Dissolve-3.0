@@ -20,7 +20,7 @@ KD = (["0.2", "1", "5"], [r"$k_d$ = 0.2", r"$k_d$ = 1", r"$k_d$ = 5"], "kd")
 KO = (["0.04", "0.2", "1"], [r"$k_{ORR}$ = 0.04", r"$k_{ORR}$ = 0.2", r"$k_{ORR}$ = 1"], "kORR")
 ROWS = [("MassLosspct", "Mass Loss (%)", (0, 0.7), 'upper left'),
         ("Filmpct", r"Saturation, F/F$_{max}$ (%)", (0, 50), 'upper left'),
-        ("InterfaceO2_mgL", r"Interface O$_2$ (mg L$^{-1}$)", (0, 3.9), 'upper right')]
+        ("InterfaceO2_mgL", r"Interface O$_2$ (mg L$^{-1}$)", (0, 3.9), 'lower left')]
 fig = plt.figure(figsize=(18, 14))
 gs = gridspec.GridSpec(3, 3, figure=fig, left=0.08, right=0.97, top=0.95, bottom=0.07, wspace=0.25, hspace=0.35)
 tf = np.linspace(0, 168, 400); letter = iter("abcdefghi")
